@@ -18,10 +18,15 @@ public class Main {
         scanner.nextLine();
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, username, pass);
-            Statement statement = connection.createStatement();
-            String sql = "insert into students_info(first_name, last_name, gender, phone_num)" +
-                    "values('" + firstName + "', '" + lastName + "', '" + gender + "', " + phoneNum + ")";
-            statement.executeUpdate(sql);
+//            Statement statement = connection.createStatement();
+//            String sql = "insert into students_info(first_name, last_name, gender, phone_num)" +
+//                    "values('" + firstName + "', '" + lastName + "', '" + gender + "', " + phoneNum + ")";
+//            statement.executeUpdate(sql);
+            PreparedStatement stmt = connection.prepareStatement("insert into students_info values(?,?,?,?)");
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, gender);
+            stmt.setLong(4, phoneNum);
         } catch (SQLException e) {
             System.out.println("Error Connection");
             e.printStackTrace();
